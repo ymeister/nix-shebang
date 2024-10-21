@@ -31,13 +31,28 @@ let nix-thunk = import ./deps/nix-thunk { inherit pkgs; };
       exec ${cached-nix-shell-bin} -p ${cached-nix-script script} --exec "$exe" "''${args[@]}"
     '';
 
-    ghcWithPackages = ''''${(haskellPackages.ghcWithPackages (pkgs: with pkgs; ['' + " '" + ''"$(echo "''${deps[@]}")"'' + "' " + '']))}/bin/ghc'';
-    haskell-script = input: output: "${ghcWithPackages} -O2 -threaded -rtsopts -with-rtsopts=-N -o ${output} ${input}";
+    ghcWithPackages = ''''${(haskellPackages.ghcWithPackages (pkgs: with pkgs; ['' + " '" + ''"$(echo "''${deps[@]}")"'' + "' " + '']))}'';
+    haskell-script = input: output: "${ghcWithPackages}/bin/ghc -O2 -threaded -rtsopts -with-rtsopts=-N -o ${output} ${input}";
+    haskell-repl = input: output: "echo ${ghcWithPackages}/bin/ghci ${input} > ${output}; chmod +x ${output}";
 
 in {
-  haskell = writeScriptBin "nix-haskell-shebang" ''
-    #!/bin/sh
+  haskell = symlinkJoin {
+    name = "nix-haskell-shebang";
+    paths = [
+      (
+        writeScriptBin "nix-haskell-shebang" ''
+          #!/bin/sh
 
-    ${cached-nix-script-shebang haskell-script}
-  '';
+          ${cached-nix-script-shebang haskell-script}
+        ''
+      )
+      (
+        writeScriptBin "nix-haskell-repl" ''
+          #!/bin/sh
+
+          ${cached-nix-script-shebang haskell-repl}
+        ''
+      )
+    ];
+  };
 }
