@@ -7,7 +7,7 @@ let nix-thunk = import ./deps/nix-thunk { inherit pkgs; };
 
     cached-nix-shell = callPackage deps.cached-nix-shell { inherit pkgs; };
     cached-nix-shell-bin = "${cached-nix-shell}/bin/cached-nix-shell";
-    cached-nix-script = script: "'" + ''runCommand "cached-nix-script" {} "mkdir -p $out/bin; ${script "\${builtins.storePath '\"$src\"'}" "$out/bin/cached-nix-script"}"'' + "'";
+    cached-nix-script = script: "'" + ''runCommand "'' + "'" + ''"$exe"'' + "'" + ''" {} "mkdir -p $out/bin; ${script "\${builtins.storePath '\"$path\"'}" ("$out/bin/" + "'" + ''"$exe"'' + "'")}"'' + "'";
     cached-nix-script-shebang = script: ''
       while [ "$#" -gt 0 ]; do
         case "$1" in
@@ -23,10 +23,12 @@ let nix-thunk = import ./deps/nix-thunk { inherit pkgs; };
         builtin shift
       done
 
-      src="$(nix store add "$(readlink -f "''${args[0]}")")"
+      src="$(readlink -f "''${args[0]}")"
+      exe="$(basename "$src")"
+      path="$(nix store add "$src")"
       args=("''${args[@]:1}")
 
-      exec ${cached-nix-shell-bin} -p ${cached-nix-script script} --exec cached-nix-script "''${args[@]}"
+      exec ${cached-nix-shell-bin} -p ${cached-nix-script script} --exec "$exe" "''${args[@]}"
     '';
 
     ghcWithPackages = ''''${(haskellPackages.ghcWithPackages (pkgs: with pkgs; [ '' + "'" + ''"''${deps[@]}"'' + "'" + '' ]))}/bin/ghc'';
