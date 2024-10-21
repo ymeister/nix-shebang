@@ -31,7 +31,7 @@ let nix-thunk = import ./deps/nix-thunk { inherit pkgs; };
       exec ${cached-nix-shell-bin} -p ${cached-nix-script script} --exec "$exe" "''${args[@]}"
     '';
 
-    ghcWithPackages = ''''${(haskellPackages.ghcWithPackages (pkgs: with pkgs; [ '' + "'" + ''"''${deps[@]}"'' + "'" + '' ]))}/bin/ghc'';
+    ghcWithPackages = ''''${(haskellPackages.ghcWithPackages (pkgs: with pkgs; ['' + " '" + ''"$(echo "''${deps[@]}")"'' + "' " + '']))}/bin/ghc'';
     haskell-script = input: output: "${ghcWithPackages} -O2 -threaded -rtsopts -with-rtsopts=-N -o ${output} ${input}";
 
 in {
