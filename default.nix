@@ -16,6 +16,9 @@ let nix-thunk = import ./deps/nix-thunk { inherit pkgs; };
             args=("''${args[@]}" "$@")
             break
             ;;
+          -*)
+            opts=("''${opts[@]}" "$1")
+            ;;
           *)
             deps=("''${deps[@]}" "$1")
             ;;
@@ -32,8 +35,8 @@ let nix-thunk = import ./deps/nix-thunk { inherit pkgs; };
     '';
 
     ghcWithPackages = ''''${(haskellPackages.ghcWithPackages (pkgs: with pkgs; ['' + " '" + ''"$(echo "''${deps[@]}")"'' + "' " + '']))}'';
-    haskell-script = input: output: "${ghcWithPackages}/bin/ghc -O2 -threaded -rtsopts -with-rtsopts=-N -o ${output} ${input}";
-    haskell-repl = input: output: "echo ${ghcWithPackages}/bin/ghci ${input} > ${output}; chmod +x ${output}";
+    haskell-script = input: output: ''${ghcWithPackages}/bin/ghc'' + " '" + ''"$(echo "''${opts[@]}")"'' + "' " + ''-o ${output} ${input}'';
+    haskell-repl = input: output: ''echo ${ghcWithPackages}/bin/ghci ${input} > ${output}; chmod +x ${output}'';
 
 in {
   haskell = symlinkJoin {
