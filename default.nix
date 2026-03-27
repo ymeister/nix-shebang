@@ -146,4 +146,10 @@ in {
     nix-haskell = mkHaskell (ghcWithPackages {});
     nixpkgs = mkHaskell ghcWithPackages';
   };
+
+  lib = {
+    inherit cached-nix-script cached-nix-script-shebang;
+    inherit mkHaskell haskell-script haskell-repl;
+    inherit ghcWithPackages mkGhcWithPackages;
+  };
 }
