@@ -19,7 +19,7 @@ let cached-nix-shell-src = inputs.cached-nix-shell or ./deps/cached-nix-shell;
       opts=()
       deps=()
       with=()
-      module="{}"
+      modules=()
 
       while [ "$#" -gt 0 ]; do
         case "$1" in
@@ -30,7 +30,7 @@ let cached-nix-shell-src = inputs.cached-nix-shell or ./deps/cached-nix-shell;
             ;;
           "--module")
             builtin shift
-            module="$1"
+            modules+=("$1")
             ;;
           "--opts")
             builtin shift
@@ -65,6 +65,8 @@ let cached-nix-shell-src = inputs.cached-nix-shell or ./deps/cached-nix-shell;
         esac
         builtin shift
       done
+
+      module="[$(printf '%s ' "''${modules[@]}")]"
 
       src="$(readlink -f "''${args[0]}")"
       exe="$(basename "$src")"

@@ -47,7 +47,7 @@ chmod +x script.hs
 | `--deps <packages...>` | Haskell package dependencies |
 | `--opts <flags...>` | GHC compiler flags (e.g. `-O2`, `-threaded`) |
 | `--with <packages...>` | Non-Haskell system dependencies from nixpkgs |
-| `--module <expr>` | Nix-haskell module override as a raw Nix expression |
+| `--module <expr>` | Nix-haskell module override as a raw Nix expression (repeatable) |
 | `--` | Separator between shebang args and script args |
 
 Bare positional arguments are treated as `--deps`.
