@@ -18,6 +18,8 @@ let cached-nix-shell-src = inputs.cached-nix-shell or ./deps/cached-nix-shell;
       args=()
       opts=()
       deps=()
+      with=()
+      module="{}"
 
       while [ "$#" -gt 0 ]; do
         case "$1" in
@@ -25,6 +27,34 @@ let cached-nix-shell-src = inputs.cached-nix-shell or ./deps/cached-nix-shell;
             builtin shift
             args=("$@")
             break
+            ;;
+          "--module")
+            builtin shift
+            module="$1"
+            ;;
+          "--opts")
+            builtin shift
+            while [ "$#" -gt 0 ] && [[ "$1" != --* ]]; do
+              opts+=("$1")
+              builtin shift
+            done
+            continue
+            ;;
+          "--deps")
+            builtin shift
+            while [ "$#" -gt 0 ] && [[ "$1" != -* ]]; do
+              deps+=("$1")
+              builtin shift
+            done
+            continue
+            ;;
+          "--with")
+            builtin shift
+            while [ "$#" -gt 0 ] && [[ "$1" != -* ]]; do
+              with+=("$1")
+              builtin shift
+            done
+            continue
             ;;
           -*)
             opts+=("$1")
@@ -41,7 +71,7 @@ let cached-nix-shell-src = inputs.cached-nix-shell or ./deps/cached-nix-shell;
       path="$(nix store add "$src")"
       args=("''${args[@]:1}")
 
-      exec ${cached-nix-shell-bin} -p ${cached-nix-script script} --exec "$exe" "''${args[@]}"
+      exec ${cached-nix-shell-bin} -p ${cached-nix-script script} "''${with[@]}" --exec "$exe" "''${args[@]}"
     '';
 
     nix-haskell-src = inputs.nix-haskell or ./deps/nix-haskell;
@@ -53,11 +83,11 @@ let cached-nix-shell-src = inputs.cached-nix-shell or ./deps/cached-nix-shell;
       let nh = nix-haskell ({ src = ./.; } // module);
           compiler = nh.config.compiler-nix-name;
           ghcWithPackages-nix = writeText "ghc-with-packages.nix" ''
-            depsStr:
+            depsStr: module:
               let nix-haskell = import ${toString nix-haskell-src} { system = "${pkgs.system}"; };
                   nh = nix-haskell {};
                   depNames = builtins.filter builtins.isString (builtins.split " " depsStr);
-              in nh.ghcWithPackages.haskell-nix {
+              in (nh.ghcWithPackages.haskell-nix ([{
                 compiler-nix-name = "${compiler}";
                 cabalProjectLocal =
                   ${"''"}
@@ -75,9 +105,9 @@ let cached-nix-shell-src = inputs.cached-nix-shell or ./deps/cached-nix-shell;
                         , ghc-experimental < 9.1500
                         , ghc-internal < 9.1500
                   ${"''"};
-              } depNames
+              }] ++ (if builtins.isList module then module else [module]))) depNames
           '';
-      in ''''${(import ${ghcWithPackages-nix} "'' + "'" + ''"$(echo "''${deps[@]}")"'' + "'" + ''")}'';
+      in ''''${(import ${ghcWithPackages-nix} "'' + "'" + ''"$(echo "''${deps[@]}")"'' + "'" + ''" '' + "'" + ''"$module"'' + "'" + '')}'';
 
     ghcWithPackages' = mkGhcWithPackages "haskellPackages.ghcWithPackages";
 
