@@ -105,6 +105,8 @@ let cached-nix-shell-src = inputs.cached-nix-shell or ./deps/cached-nix-shell;
                         , ghc-experimental < 9.1500
                         , ghc-internal < 9.1500
                   ${"''"};
+                withHaddock = false;
+                withHoogle = false;
               }] ++ (if builtins.isList module then module else [module]))) depNames
           '';
       in ''''${(import ${ghcWithPackages-nix} "'' + "'" + ''"$(echo "''${deps[@]}")"'' + "'" + ''" '' + "'" + ''"$module"'' + "'" + '')}'';
