@@ -70,14 +70,19 @@
     "cached-nix-shell": {
       "flake": false,
       "locked": {
-        "path": "./deps/cached-nix-shell",
-        "type": "path"
+        "lastModified": 1719168445,
+        "narHash": "sha256-LI/hecqeRg3eCzU2bASJA8VoG4nvrSeHSeaGYn7M/UI=",
+        "rev": "62e282be819646e3cdcd458af3f222e8f09e62ca",
+        "revCount": 182,
+        "submodules": true,
+        "type": "git",
+        "url": "file:./deps/cached-nix-shell"
       },
       "original": {
-        "path": "./deps/cached-nix-shell",
-        "type": "path"
-      },
-      "parent": []
+        "submodules": true,
+        "type": "git",
+        "url": "file:./deps/cached-nix-shell"
+      }
     },
     "cardano-shell": {
       "flake": false,
@@ -511,14 +516,20 @@
         "reflex-platform": "reflex-platform"
       },
       "locked": {
-        "path": "./deps/nix-haskell",
-        "type": "path"
+        "lastModified": 1774594230,
+        "narHash": "sha256-F7j8jY+LNBV1mDPBEkqPQQEFK2O2jtzP9mbboFANDsw=",
+        "ref": "refs/heads/ghc-with-packages",
+        "rev": "12dc9865913899a928dacc5748079b2f91c5cac1",
+        "revCount": 104,
+        "submodules": true,
+        "type": "git",
+        "url": "file:./deps/nix-haskell"
       },
       "original": {
-        "path": "./deps/nix-haskell",
-        "type": "path"
-      },
-      "parent": []
+        "submodules": true,
+        "type": "git",
+        "url": "file:./deps/nix-haskell"
+      }
     },
     "nixpkgs": {
       "locked": {
