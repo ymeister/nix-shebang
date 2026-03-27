@@ -1,0 +1,6 @@
+[submodule "deps/cached-nix-shell"]
+	path = deps/cached-nix-shell
+	url = https://github.com/xzfc/cached-nix-shell
+[submodule "deps/nix-haskell"]
+	path = deps/nix-haskell
+	url = https://github.com/ymeister/nix-haskell
