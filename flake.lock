@@ -498,10 +498,11 @@
         "reflex-platform": "reflex-platform"
       },
       "locked": {
-        "lastModified": 1778023806,
-        "narHash": "sha256-1bHlh2FrTwhfb714iSqCjW83a1gMmVf590gg8+2Fhuw=",
-        "rev": "b636f3f1e892624c0121ef45eb422252eb66ae73",
-        "revCount": 105,
+        "lastModified": 1778027617,
+        "narHash": "sha256-E5Xd6qmAC30fXO0DvS2yKzLlFLJEVA4/4QcX8MeMlNo=",
+        "ref": "refs/heads/main",
+        "rev": "e682b3ce280378bb2cb6a342df686987fabb63e1",
+        "revCount": 107,
         "submodules": true,
         "type": "git",
         "url": "file:./deps/nix-haskell"
