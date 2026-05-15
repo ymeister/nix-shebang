@@ -53,19 +53,14 @@
     "cached-nix-shell": {
       "flake": false,
       "locked": {
-        "lastModified": 1719168445,
-        "narHash": "sha256-LI/hecqeRg3eCzU2bASJA8VoG4nvrSeHSeaGYn7M/UI=",
-        "rev": "62e282be819646e3cdcd458af3f222e8f09e62ca",
-        "revCount": 182,
-        "submodules": true,
-        "type": "git",
-        "url": "file:./deps/cached-nix-shell"
+        "path": "deps/cached-nix-shell",
+        "type": "path"
       },
       "original": {
-        "submodules": true,
-        "type": "git",
-        "url": "file:./deps/cached-nix-shell"
-      }
+        "path": "deps/cached-nix-shell",
+        "type": "path"
+      },
+      "parent": []
     },
     "cardano-shell": {
       "flake": false,
@@ -498,20 +493,14 @@
         "reflex-platform": "reflex-platform"
       },
       "locked": {
-        "lastModified": 1778027617,
-        "narHash": "sha256-E5Xd6qmAC30fXO0DvS2yKzLlFLJEVA4/4QcX8MeMlNo=",
-        "ref": "refs/heads/main",
-        "rev": "e682b3ce280378bb2cb6a342df686987fabb63e1",
-        "revCount": 107,
-        "submodules": true,
-        "type": "git",
-        "url": "file:./deps/nix-haskell"
+        "path": "deps/nix-haskell",
+        "type": "path"
       },
       "original": {
-        "submodules": true,
-        "type": "git",
-        "url": "file:./deps/nix-haskell"
-      }
+        "path": "deps/nix-haskell",
+        "type": "path"
+      },
+      "parent": []
     },
     "nixpkgs": {
       "locked": {

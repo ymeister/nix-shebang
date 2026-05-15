@@ -1,11 +1,13 @@
 {
   inputs = {
+    self.submodules = true;
+
     cached-nix-shell = {
-      url = "git+file:./deps/cached-nix-shell?submodules=1";
+      url = ./deps/cached-nix-shell;
       flake = false;
     };
 
-    nix-haskell.url = "git+file:./deps/nix-haskell?submodules=1";
+    nix-haskell.url = ./deps/nix-haskell;
 
     nixpkgs.follows = "nix-haskell/nixpkgs";
   };
