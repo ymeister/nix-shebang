@@ -14,7 +14,7 @@ Add a shebang to your Haskell file:
 
 ```haskell
 #!/usr/bin/env nix
-#!nix shell --no-write-lock-file git+https://github.com/ymeister/nix-shebang?submodules=1##haskell.nix-haskell --command sh -c ``nix-haskell-shebang --opts -O2 --deps shh -- "$@"`` sh
+#!nix shell --no-write-lock-file git+https://github.com/ymeister/nix-shebang?submodules=1#haskell.nix-haskell --command sh -c ``nix-haskell-shebang --opts -O2 --deps shh -- "$@"`` sh
 
 {-# LANGUAGE ExtendedDefaultRules #-}
 {-# LANGUAGE TemplateHaskell #-}
