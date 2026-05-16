@@ -105,6 +105,7 @@ let cached-nix-shell-src = inputs.cached-nix-shell or ./deps/cached-nix-shell;
                         , *:ghc-experimental
                         , *:ghc-internal
                         , *:ghc-bignum
+                        , *:containers
                       constraints:
                           base < 4.23
                         , template-haskell < 2.25
